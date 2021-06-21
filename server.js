@@ -1,5 +1,6 @@
 const express = require('express')
 require('./db.js')
+const Student = require('./Student')
 
 const app = express()
 
@@ -16,22 +17,17 @@ app.get('/success', (req,res)=>{
 
 app.post("/", async function (req, res) {
 
-	const context = {
+	const context = new Student({
 		name: req.body.name, 
 		email: req.body.email, 
 		contact: req.body.contact
-	}
+	})
 	try{
 		await context.save()
 		res.redirect('/success')
 	}catch(err){
 		console.log(err)
 	}
-  
-  
-
- 
 });
-
 const port = 3000;
 app.listen(port, ()=> console.log(`listening on ${port}`))
